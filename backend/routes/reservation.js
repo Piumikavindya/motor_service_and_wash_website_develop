@@ -1,5 +1,4 @@
 const router = require('express').Router();
-const passport = require('passport');
 const { create, updateReservation, viewReservations,deleterReservation, previewReservation } = require('../controllers/reservation');
 
 

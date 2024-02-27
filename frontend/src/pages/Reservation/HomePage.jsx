@@ -139,8 +139,8 @@ export default function Home() {
                 className="text-center mb-10 wow fadeInUp"
                 data-wow-delay="1.2s"
               >
-                <a href="/order" rel="nofollow" className="btn">
-          Make  a Reservations      Login
+                <a href="/reservation/create" rel="nofollow" className="btn">
+          Make a Reservations   
                 </a>
               </div>
             </div>

@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useSnackbar } from "notistack";
-import Breadcrumb from "../../components/Breadcrumb.jsx";
+import "../../styles/button2.css";
 
-const CreateReservations  = () => {
+const UpdateReservations = () => {
   const [VehicleType, setVehicleType] = useState("");
   const [VehicleNumber, setVehicleNumber] = useState("");
   const [Services, setServices] = useState("");
@@ -13,14 +13,38 @@ const CreateReservations  = () => {
   const [Time, setTime] = useState("");
   const [Comments, setComments] = useState("");
   const [loading, setLoading] = useState(false);
+  const { id } = useParams();
   const { enqueueSnackbar } = useSnackbar();
-
   const navigate = useNavigate();
-  
-  function CreateNewReservations (e) {
+
+  useEffect(() => {
+    setLoading(true);
+    axios
+      .get(`http://localhost:5555/reservation/preview-reservation/${id}`)
+      .then((response) => {
+        const reservationData = response.data;
+        console.log('Fetched reservation data:', reservationData);
+
+        setServiceStation(reservationData.ServiceStation);
+        setVehicleNumber(reservationData.VehicleNumber);
+        setVehicleType(reservationData.VehicleType);
+        setServices(reservationData.Services);
+        setComments(reservationData.Comments);
+        setDate(reservationData.Date);
+        setTime(reservationData.Time);
+        setLoading(false);
+      })
+      .catch((error) => {
+        setLoading(false);
+        enqueueSnackbar("Error fetching reservation data", { variant: "error" });
+        console.log(error);
+      });
+  }, [id]);
+
+  function handleUpdateReservations(e) {
     e.preventDefault();
 
-    const newResrvation = {
+    const updateReservation = {
       VehicleType,
       VehicleNumber,
       Services,
@@ -31,10 +55,9 @@ const CreateReservations  = () => {
     };
     setLoading(true);
     axios
-      .post("http://localhost:5555/reservation/create", newResrvation)
+      .put(`http://localhost:5555/reservation/update/${id}`, updateReservation)
       .then(() => {
-        alert("Reservation is Created successfully");
-
+        enqueueSnackbar("Reservation updated successfully", { variant: "success" });
         setLoading(false);
         setServiceStation("");
         setVehicleNumber("");
@@ -43,26 +66,16 @@ const CreateReservations  = () => {
         setComments("");
         setDate("");
         setTime("");
-       
-      
+        navigate('/reservation/allreservations');
       })
       .catch((error) => {
         setLoading(false);
-        enqueueSnackbar("Error", { variant: "error" });
+        enqueueSnackbar("Error updating reservation", { variant: "error" });
         console.log(error);
       });
-  };
+  }
 
   return (
-    <div className="app-container p-8 rounded border border-gray-200">
-   <Breadcrumb
-     crumbs={[
-       { label: "Home", link: "/homepage" },
-       { label: "User Reservation List", link: "/reservation/allreservations" },
-       { label: "New Reservation", link: "/reservation/create" },
-     ]}
-     selected={(crumb) => console.log(`Selected: ${crumb.label}`)}
-   />
     <div className="bg-gray-100 dark:bg-gray-800 transition-colors duration-300">
       <div className="container mx-auto p-10">
         <div className="bg-white dark:bg-gray-700 shadow rounded-lg p-6">
@@ -77,7 +90,7 @@ const CreateReservations  = () => {
             confirmation call, ensuring your booking is swiftly confirmed.
             Experience seamless scheduling without the fuss.{" "}
           </p>
-          <form onSubmit={CreateNewReservations}>
+          <form onSubmit={handleUpdateReservations}>
             <div className="mb-4">
               <select
                 value={VehicleType}
@@ -165,8 +178,7 @@ const CreateReservations  = () => {
         </div>
       </div>
     </div>
-    </div>
   );
 };
 
-export default CreateReservations ;
+export default UpdateReservations;

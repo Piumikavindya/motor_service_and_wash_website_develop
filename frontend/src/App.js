@@ -7,6 +7,9 @@ import HomePage from './pages/Reservation/HomePage';
 import CreateReservation from './pages/Reservation/CreateReservation ';
 import DeleteReservation from './pages/Reservation/DeleteReservation';
 import AllReservations from './pages/Reservation/AllReservations';
+import PreviewReservation from './pages/Reservation/PreviewReservation';
+import UpadteReservation from './pages/Reservation/UpdateReservation';
+
 
 
 function App() {
@@ -19,7 +22,10 @@ function App() {
         <Route path="/signup" element={<SignUpPage />} />
         <Route path="/homepage" element={<HomePage />} />
         <Route path="/reservation/create" element={<CreateReservation />} />
-        <Route path='/reservation/delete' element ={<DeleteReservation/>} />
+        <Route path='/reservation/delete/:id' element ={<DeleteReservation/>} />
+        <Route path='/reservation/preview/:id' element ={<PreviewReservation/>} />
+        <Route path='/reservation/update/:id' element ={<UpadteReservation/>} />
+
         <Route path='/reservation/allreservations' element ={<AllReservations/>} />
 
         {/* Add more routes as needed */}
