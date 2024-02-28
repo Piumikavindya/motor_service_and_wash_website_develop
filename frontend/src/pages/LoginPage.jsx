@@ -1,58 +1,98 @@
-import React from 'react';
-import { useNavigate } from 'react-router-dom'; // Import useNavigate hook from react-router-dom
-
+import React, { useState } from "react";
+import { Link,useNavigate } from "react-router-dom";
+import { useLogin } from "../hooks/useLogin";
 const LoginPage = () => {
-  const navigate = useNavigate(); // Initialize useNavigate hook
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const { login, error, isLoading } = useLogin();
+  const navigate = useNavigate();
 
-  const navigateToHomePage = () => {
-    // Function to navigate to another page
-    navigate('/homepage'); // Use navigate function to navigate to '/another-page'
+  const handleLogin = async (e) => {
+    e.preventDefault();
+    await login(email, password);
+    // Add your login logic here
+    if (!error) {
+      navigate("/reservation/allreservations"); // Navigate to the home page
+    }
   };
 
   return (
-    <div className="bg-white dark:bg-gray-900">
-      <div className="flex justify-center h-screen">
-        <div className="hidden bg-cover lg:block lg:w-2/3" style={{backgroundImage: "url(https://images.unsplash.com/photo-1616763355603-9755a640a287?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80)"}}>
-          <div className="flex items-center h-full px-20 bg-gray-900 bg-opacity-40">
+    <section className="flex flex-col md:flex-row h-screen items-center">
+      <div className="bg-indigo-600 hidden lg:block w-full md:w-1/2 xl:w-2/3 h-screen">
+        <img
+          src="https://source.unsplash.com/random"
+          alt=""
+          className="w-full h-full object-cover"
+        />
+      </div>
+
+      <div className="bg-white w-full md:max-w-md lg:max-w-full md:mx-auto md:mx-0 md:w-1/2 xl:w-1/3 h-screen px-6 lg:px-16 xl:px-12 flex items-center justify-center">
+        <div className="w-full h-100">
+          <h1 className="text-xl md:text-2xl font-bold leading-tight mt-12">
+            Log in to your account
+          </h1>
+
+          <form className="mt-6" onSubmit={handleLogin}>
             <div>
-              <h2 className="text-4xl font-bold text-white">Brand</h2>
-              <p className="max-w-xl mt-3 text-gray-300">Lorem ipsum dolor sit, amet consectetur adipisicing elit. In autem ipsa, nulla laboriosam dolores, repellendus perferendis libero suscipit nam temporibus molestiae</p>
+              <label className="block text-gray-700">Email Address</label>
+              <input
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder="Enter Email Address"
+                className="w-full px-4 py-3 rounded-lg bg-gray-200 mt-2 border focus:border-blue-500 focus:bg-white focus:outline-none"
+                autoFocus
+                autoComplete="email"
+                required
+              />
             </div>
-          </div>
-        </div>
-        <div className="flex items-center w-full max-w-md px-6 mx-auto lg:w-2/6">
-          <div className="flex-1">
-            <div className="text-center">
-              <h2 className="text-4xl font-bold text-center text-gray-700 dark:text-white">Brand</h2>
-              <p className="mt-3 text-gray-500 dark:text-gray-300">Sign in to access your account</p>
+
+            <div className="mt-4">
+              <label className="block text-gray-700">Password</label>
+              <input
+                type="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                placeholder="Enter Password"
+                minLength="6"
+                className="w-full px-4 py-3 rounded-lg bg-gray-200 mt-2 border focus:border-blue-500 focus:bg-white focus:outline-none"
+                required
+              />
             </div>
-            <div className="mt-8">
-              <form>
-                <div>
-                  <label htmlFor="email" className="block mb-2 text-sm text-gray-600 dark:text-gray-200">Email Address</label>
-                  <input type="email" name="email" id="email" placeholder="example@example.com" className="block w-full px-4 py-2 mt-2 text-gray-700 placeholder-gray-400 bg-white border border-gray-200 rounded-md dark:placeholder-gray-600 dark:bg-gray-900 dark:text-gray-300 dark:border-gray-700 focus:border-blue-400 dark:focus:border-blue-400 focus:ring-blue-400 focus:outline-none focus:ring focus:ring-opacity-40" />
-                </div>
-                <div className="mt-6">
-                  <div className="flex justify-between mb-2">
-                    <label htmlFor="password" className="text-sm text-gray-600 dark:text-gray-200">Password</label>
-                    <a href="#" className="text-sm text-gray-400 focus:text-blue-500 hover:text-blue-500 hover:underline">Forgot password?</a>
-                  </div>
-                  <input type="password" name="password" id="password" placeholder="Your Password" className="block w-full px-4 py-2 mt-2 text-gray-700 placeholder-gray-400 bg-white border border-gray-200 rounded-md dark:placeholder-gray-600 dark:bg-gray-900 dark:text-gray-300 dark:border-gray-700 focus:border-blue-400 dark:focus:border-blue-400 focus:ring-blue-400 focus:outline-none focus:ring focus:ring-opacity-40" />
-                </div>
-                <div className="mt-6">
-                <button
-      className="w-full px-4 py-2 tracking-wide text-white transition-colors duration-200 transform bg-blue-500 rounded-md hover:bg-blue-400 focus:outline-none focus:bg-blue-400 focus:ring focus:ring-blue-300 focus:ring-opacity-50"
-      onClick={navigateToHomePage} // Add onClick event to call navigateToAnotherPage function
-    >
-      Sign in
-    </button>                </div>
-              </form>
-              <p className="mt-6 text-sm text-center text-gray-400">Don't have an account yet? <a href="/signup" className="text-blue-500 focus:outline-none focus:underline hover:underline">Sign up</a>.</p>
+
+            <div className="text-right mt-2">
+              <a
+                href="#"
+                className="text-sm font-semibold text-gray-700 hover:text-blue-700 focus:text-blue-700"
+              >
+                Forgot Password?
+              </a>
             </div>
-          </div>
+
+            <button
+              disabled={isLoading}
+              type="submit"
+              className="w-full block bg-indigo-500 hover:bg-indigo-400 focus:bg-indigo-400 text-white font-semibold rounded-lg px-4 py-3 mt-6"
+            >
+              Log In
+            </button>
+            {error && <div className="error">{error}</div>}
+          </form>
+
+          <hr className="my-6 border-gray-300 w-full" />
+
+          <p className="mt-8">
+            Need an account?{" "}
+            <Link
+              to="/signup"
+              className="text-blue-500 hover:text-blue-700 font-semibold"
+            >
+              Create an account
+            </Link>
+          </p>
         </div>
       </div>
-    </div>
+    </section>
   );
 };
 

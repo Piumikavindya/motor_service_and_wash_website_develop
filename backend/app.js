@@ -7,9 +7,8 @@ const app = express();
 require('express-async-errors');
 require('dotenv').config();
 require('./database/database');
-require('./middlewares/error');
 const reservationRouter = require("./routes/reservation");
-const { errorHandler } = require('./middlewares/error');
+const customerRouter = require("./routes/customer");
 
 const PORT = process.env.PORT || 5555;
 
@@ -39,7 +38,8 @@ app.get("/about",(req,res) =>{
 
 
 app.use('/reservation', reservationRouter);
-app.use(errorHandler);
+app.use('/customer', customerRouter);
+
 app.listen(PORT, () => {
     console.log(`The server is listening on port: ${PORT}`);
   });

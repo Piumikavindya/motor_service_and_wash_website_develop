@@ -8,6 +8,9 @@ module.exports = {
   },
   theme: {
     extend: {
+      colors: {
+        'customblue': '#06b6d4', // Example custom blue color
+      },
       inset: {
         '100': '100%',
       }

@@ -1,13 +1,22 @@
 import React, { useState } from "react";
+import { useLogout } from "../hooks/useLogout";
+import { Link } from "react-router-dom";
+import { useAuthContext } from "../hooks/useAuthContext";
+
 export default function Home() {
   const [message, setMessage] = useState("");
   const [email, setEmail] = useState("");
   const [subject, setSubject] = useState("");
   const [name, setName] = useState("");
+  const { customer } = useAuthContext();
   const handleSendMessage = () => {
     // Here, you can implement the logic to send the message, such as making an API request.
     // You can use the 'message' state to get the message content.
     alert("Message sent: " + message);
+  };
+  const { logout } = useLogout();
+  const handleClick = () => {
+    logout();
   };
 
   return (
@@ -91,14 +100,24 @@ export default function Home() {
                   </li>
                 </ul>
               </div>
-              <div className="header-btn hidden sm:block sm:absolute sm:right-0 sm:mr-16 lg:static lg:mr-0">
-                <a
-                  className="text-blue-600 border border-blue-600 px-10 py-3 rounded-full duration-300 hover:bg-blue-600 hover:text-white"
-                  href="#feature"
-                >
-                  FAQ
-                </a>
-              </div>
+              {customer && (
+                <div>
+                  <span>{customer.email}</span>
+                  <button
+                    onClick={handleClick}
+                    className="text-blue-600 border border-blue-600 px-10 py-3 rounded-full duration-300 hover:bg-blue-600 hover:text-white"
+                  >
+                    Log out
+                  </button>
+                </div>
+              )}
+              {!customer && (
+                <div className="header-btn hidden sm:block sm:absolute sm:right-0 sm:mr-16 lg:static lg:mr-0">
+                  <button className="text-blue-600 border border-blue-600 px-10 py-3 rounded-full duration-300 hover:bg-blue-600 hover:text-white">
+                    <Link to="signup">Signup</Link>
+                  </button>
+                </div>
+              )}
             </nav>
           </div>
         </div>
@@ -139,9 +158,13 @@ export default function Home() {
                 className="text-center mb-10 wow fadeInUp"
                 data-wow-delay="1.2s"
               >
-                <a href="/login" rel="nofollow" className="btn">
-                  Login
-                </a>
+                {!customer && (
+                <div className="header-btn hidden sm:block sm:absolute sm:right-0 sm:mr-16 lg:static lg:mr-0">
+                  <button className="text-white font-bold bg-pink-800 border border-blue-600 px-10 py-3 rounded-full duration-300 hover:bg-blue-600 hover:text-white">
+                    <Link to="login">Login</Link>
+                  </button>
+                </div>
+              )}
               </div>
             </div>
           </div>
@@ -150,194 +173,87 @@ export default function Home() {
       {/* Hero Area End */}
 
       {/*   Services Section Start*/}
-      <section id="services" className="py-24">
-        <div className="container">
-          <div className="text-center">
-            <h2
-              className="mb-12 section-heading wow fadeInDown"
-              data-wow-delay="0.3s"
-            >
-              Our Services
-            </h2>
+      <section id="services" className="py-24" style={{ backgroundImage: 'url("/assets/31130.jpg")', backgroundSize: 'cover', backgroundPosition: 'center' }}>
+  <div className="container">
+    <div className="text-center">
+      <h2 className="mb-12 section-heading wow fadeInDown" data-wow-delay="0.3s">Our Services</h2>
+    </div>
+    <div className="flex flex-wrap">
+      <div className="w-full sm:w-1/2 md:w-1/2 lg:w-1/3">
+        <div className="m-4 wow fadeInRight" data-wow-delay="0.3s">
+          <div className="icon text-5xl">
+            <i className="lni lni-cog"></i>
           </div>
-          <div className="flex flex-wrap">
-            {/* Services item */}
-            <div className="w-full sm:w-1/2 md:w-1/2 lg:w-1/3">
-              <div className="m-4 wow fadeInRight" data-wow-delay="0.3s">
-                <div className="icon text-5xl">
-                  <i className="lni lni-cog"></i>
-                </div>
-                <div>
-                  <h3 className="service-title">INTERIOR DETAILING</h3>
-                  <p className="text-gray-600">
-                    Discover our exceptional Interior Detailing service where we
-                    employ the finest methods and techniques to transform your
-                    vehicle's interior into a haven of cleanliness and comfort.
-                    Our meticulous process goes above and beyond traditional
-                    vehicle cleaning, ensuring your vehicle's interior is
-                    treated with the most care and attention to detail. Our main
-                    services of interior detailing include{" "}
-                    <mark>
-                      vacuuming carpets, seats & ashtrays, wiping plastic &
-                      vinyl surfaces, cleaning all interior glass, cleaning door
-                      jambs, and towel drying.
-                    </mark>
-                  </p>
-                </div>
-              </div>
-            </div>
-
-            {/* Services item */}
-            <div className="w-full sm:w-1/2 md:w-1/2 lg:w-1/3">
-              <div className="m-4 wow fadeInRight" data-wow-delay="0.3s">
-                <div className="icon text-5xl">
-                  <i className="lni lni-cog"></i>
-                </div>
-                <div>
-                  <h3 className="service-title">EXTERIOR DETAILING</h3>
-                  <p className="text-gray-600">
-                    Experience excellence with our Exterior Detailing service,
-                    where we employ cutting-edge techniques to reveal the full
-                    splendor of your vehicle's exterior. We take pride in
-                    offering top-tier methods, ensuring your vehicle not only
-                    shines but is also protected against the elements. Our main
-                    services of exterior detailing include{" "}
-                    <mark>
-                      Basic Wash for standard exterior cleaning, Deluxe Wash for
-                      a premium wash with tire and rim cleaning, Premium Wash
-                      for a basic wash with additional wax or polish, and Hand
-                      Wash for thorough hand washing for a more personalized
-                      touch.
-                    </mark>
-                  </p>
-                </div>
-              </div>
-            </div>
-
-            {/* Services item */}
-            <div className="w-full sm:w-1/2 md:w-1/2 lg:w-1/3">
-              <div className="m-4 wow fadeInRight" data-wow-delay="0.3s">
-                <div className="icon text-5xl">
-                  <i className="lni lni-cog"></i>
-                </div>
-                <div>
-                  <h3 className="service-title">FULL-SERVICE PACKAGES</h3>
-                  <p className="text-gray-600">
-                    Discover our Full-Service Packages, where we blend expertise
-                    with state-of-the-art methods to offer you a comprehensive
-                    vehicle care experience like no other. With an unwavering
-                    commitment to excellence, our packages go beyond traditional
-                    car care, ensuring your vehicle receives the utmost
-                    attention, rejuvenation, and protection. Our services
-                    include
-                    <mark>
-                      {" "}
-                      Full-Service Wash, providing both exterior and interior
-                      cleaning; Express Detail, offering a combination of
-                      exterior wash and interior detailing; Paint Brilliance,
-                      where we enhance your vehicle's paint to reveal its true
-                      brilliance, giving it a deep and radiant shine; and Wheel
-                      and Rim Excellence, ensuring your wheels and rims shine
-                      brilliantly, adding to your vehicle's overall appeal.
-                    </mark>
-                  </p>
-                </div>
-              </div>
-            </div>
-
-            {/* Services item */}
-            <div className="w-full sm:w-1/2 md:w-1/2 lg:w-1/3">
-              <div className="m-4 wow fadeInRight" data-wow-delay="0.3s">
-                <div className="icon text-5xl">
-                  <i className="lni lni-cog"></i>
-                </div>
-                <div>
-                  <h3 className="service-title">Wheel Alignment</h3>
-                  <p className="text-gray-600">
-                    With our state-of-the-art wheel alignment machines utilizing
-                    3D technology, we ensure that your vehicle's tires are
-                    precisely set as they were when they left the factory,
-                    optimizing performance, handling, fuel economy, ride
-                    comfort, and tire lifespan. Wheel alignment, often
-                    overlooked yet crucial, enhances various aspects of your
-                    car's functionality. Our machines offer several types of
-                    alignment adjustments—TOE ALIGNMENT and CASTER
-                    ALIGNMENT—guaranteeing the best possible results.
-                    <mark>
-                      {" "}
-                      Renowned for being the fastest, most accurate, and
-                      reliable aligner ever, our technology ensures that your
-                      vehicle operates at its peak performance levels, providing
-                      you with a smoother and safer driving experience.
-                    </mark>
-                  </p>
-                </div>
-              </div>
-            </div>
-
-            {/* Services item */}
-
-            {/* Services item */}
-            <div className="w-full sm:w-1/2 md:w-1/2 lg:w-1/3">
-              <div className="m-4 wow fadeInRight" data-wow-delay="0.3s">
-                <div className="icon text-5xl">
-                  <i className="lni lni-cog"></i>
-                </div>
-                <div>
-                  <h3 className="service-title">Wheel Alignment</h3>
-                  <p className="text-gray-600">
-                    On our website, you'll discover a wealth of information
-                    regarding our extensive range of vehicle wash services.
-                    Whether you're seeking a quick refresh or a more thorough
-                    cleansing experience, we have tailored packages to suit
-                    every need. You can find more information about our
-                    comprehensive wash services, including Quick Wash and
-                    Detailed Wash packages, on our website
-                    <mark>
-                      Our Quick Wash includes body wash and tire dressing,
-                      ensuring a quick and efficient cleaning process. For a
-                      more thorough cleaning, our Detailed Wash package offers
-                      body wash, carpet wash, glass cleaning, dash cleaning,
-                      tire dressing & wax, and interior vacuuming, all with the
-                      added benefit of a free interior vacuum. Visit our website
-                      to learn more about how we can keep your vehicle looking
-                      its best.
-                    </mark>
-                  </p>
-                </div>
-              </div>
-            </div>
-
-            {/* Services item */}
-            {/* Services item */}
-            <div className="w-full sm:w-1/2 md:w-1/2 lg:w-1/3">
-              <div className="m-4 wow fadeInRight" data-wow-delay="0.3s">
-                <div className="icon text-5xl">
-                  <i className="lni lni-cog"></i>
-                </div>
-                <div>
-                  <h3 className="service-title">ADDITIONAL SERVICES</h3>
-                  <p className="text-gray-600">
-                    Explore our Additional Services, where we extend our
-                    commitment to excellence to accommodate your specific
-                    vehicle care preferences. With unparalleled attention to
-                    detail and a passion for perfection, our additional services
-                    are designed to enhance your vehicle's aesthetics,
-                    performance, and overall experience.
-                    <mark>
-                      Tire Dressing for applying a glossy finish to tires,
-                      Window Tinting for privacy and UV protection, Ceramic
-                      Coating for long-lasting paint protection and shine, and
-                      Windshield Repair/Replacement for fixing or replacing
-                      damaged windshields.
-                    </mark>
-                  </p>
-                </div>
-              </div>
-            </div>
+          <div>
+            <h3 className="service-title">INTERIOR DETAILING</h3>
+            <p className="text-gray-600">Discover our exceptional Interior Detailing service where we employ the finest methods and techniques to transform your vehicle's interior into a haven of cleanliness and comfort. Our meticulous process goes above and beyond traditional vehicle cleaning, ensuring your vehicle's interior is treated with the most care and attention to detail. Our main services of interior detailing include vacuuming carpets, seats & ashtrays, wiping plastic & vinyl surfaces, cleaning all interior glass, cleaning door jambs, and towel drying.</p>
           </div>
         </div>
-      </section>
+      </div>
+
+      <div className="w-full sm:w-1/2 md:w-1/2 lg:w-1/3">
+        <div className="m-4 wow fadeInRight" data-wow-delay="0.3s">
+          <div className="icon text-5xl">
+            <i className="lni lni-cog"></i>
+          </div>
+          <div>
+            <h3 className="service-title">EXTERIOR DETAILING</h3>
+            <p className="text-gray-600">Experience excellence with our Exterior Detailing service, where we employ cutting-edge techniques to reveal the full splendor of your vehicle's exterior. We take pride in offering top-tier methods, ensuring your vehicle not only shines but is also protected against the elements. Our main services of exterior detailing include Basic Wash for standard exterior cleaning, Deluxe Wash for a premium wash with tire and rim cleaning, Premium Wash for a basic wash with additional wax or polish, and Hand Wash for thorough hand washing for a more personalized touch.</p>
+          </div>
+        </div>
+      </div>
+
+      <div className="w-full sm:w-1/2 md:w-1/2 lg:w-1/3">
+        <div className="m-4 wow fadeInRight" data-wow-delay="0.3s">
+          <div className="icon text-5xl">
+            <i className="lni lni-cog"></i>
+          </div>
+          <div>
+            <h3 className="service-title">FULL-SERVICE PACKAGES</h3>
+            <p className="text-gray-600">Discover our Full-Service Packages, where we blend expertise with state-of-the-art methods to offer you a comprehensive vehicle care experience like no other. With an unwavering commitment to excellence, our packages go beyond traditional car care, ensuring your vehicle receives the utmost attention, rejuvenation, and protection. Our services include Full-Service Wash, providing both exterior and interior cleaning; Express Detail, offering a combination of exterior wash and interior detailing; Paint Brilliance, where we enhance your vehicle's paint to reveal its true brilliance, giving it a deep and radiant shine; and Wheel and Rim Excellence, ensuring your wheels and rims shine brilliantly, adding to your vehicle's overall appeal.</p>
+          </div>
+        </div>
+      </div>
+
+      <div className="w-full sm:w-1/2 md:w-1/2 lg:w-1/3">
+        <div className="m-4 wow fadeInRight" data-wow-delay="0.3s">
+          <div className="icon text-5xl">
+            <i className="lni lni-cog"></i>
+          </div>
+          <div>
+            <h3 className="service-title">Wheel Alignment</h3>
+            <p className="text-gray-600">With our state-of-the-art wheel alignment machines utilizing 3D technology, we ensure that your vehicle's tires are precisely set as they were when they left the factory, optimizing performance, handling, fuel economy, ride comfort, and tire lifespan. Wheel alignment, often overlooked yet crucial, enhances various aspects of your car's functionality. Our machines offer several types of alignment adjustments—TOE ALIGNMENT and CASTER ALIGNMENT—guaranteeing the best possible results. Renowned for being the fastest, most accurate, and reliable aligner ever, our technology ensures that your vehicle operates at its peak performance levels, providing you with a smoother and safer driving experience.</p>
+          </div>
+        </div>
+      </div>
+
+      <div className="w-full sm:w-1/2 md:w-1/2 lg:w-1/3">
+        <div className="m-4 wow fadeInRight" data-wow-delay="0.3s">
+          <div className="icon text-5xl">
+            <i className="lni lni-cog"></i>
+          </div>
+          <div>
+            <h3 className="service-title">Wheel Alignment</h3>
+            <p className="text-gray-600">On our website, you'll discover a wealth of information regarding our extensive range of vehicle wash services. Whether you're seeking a quick refresh or a more thorough cleansing experience, we have tailored packages to suit every need. You can find more information about our comprehensive wash services, including Quick Wash and Detailed Wash packages, on our website Our Quick Wash includes body wash and tire dressing, ensuring a quick and efficient cleaning process. For a more thorough cleaning, our Detailed Wash package offers body wash, carpet wash, glass cleaning, dash cleaning, tire dressing & wax, and interior vacuuming, all with the added benefit of a free interior vacuum. Visit our website to learn more about how we can keep your vehicle looking its best.</p>
+          </div>
+        </div>
+      </div>
+
+      <div className="w-full sm:w-1/2 md:w-1/2 lg:w-1/3">
+        <div className="m-4 wow fadeInRight" data-wow-delay="0.3s">
+          <div className="icon text-5xl">
+            <i className="lni lni-cog"></i>
+          </div>
+          <div>
+            <h3 className="service-title">ADDITIONAL SERVICES</h3>
+            <p className="text-gray-600">Explore our Additional Services, where we extend our commitment to excellence to accommodate your specific vehicle care preferences. With unparalleled attention to detail and a passion for perfection, our additional services are designed to enhance your vehicle's aesthetics, performance, and overall experience. Tire Dressing for applying a glossy finish to tires, Window Tinting for privacy and UV protection, Ceramic Coating for long-lasting paint protection and shine, and Windshield Repair/Replacement for fixing or replacing damaged windshields.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
       {/* Services End */}
 
       {/* Feature Section Start  */}
@@ -464,8 +380,63 @@ export default function Home() {
       </div>
       {/* Feature Section End  */}
 
-      {/* Network Section Start */}
-      <section id="team" className="py-24 text-center">
+     
+
+      {/* Clients Section Start */}
+      <div id="clients" className="py-16 bg-blue-100" style={{ backgroundImage: 'url("/assets/31130.jpg")', backgroundSize: 'cover', backgroundPosition: 'center' }}>
+        <div className="container">
+          <div className="text-center">
+            <h2
+              className="mb-12 section-heading wow fadeInDown"
+              data-wow-delay="0.3s"
+            >
+              WE WORK WITH WORLD RENOWNED VEHICLE CARE BRANDS
+            </h2>
+          </div>
+          <div className="flex flex-wrap justify-center">
+            <div className="w-1/2 md:w-1/4 lg:w-1/4">
+              <div className="m-3 wow fadeInUp" data-wow-delay="0.3s">
+                <img
+                  className="client-logo"
+                  src="assets/img/clients/toyota_logo.png"
+                  alt=""
+                />
+              </div>
+            </div>
+            <div className="w-1/2 md:w-1/4 lg:w-1/4">
+              <div className="m-3 wow fadeInUp" data-wow-delay="0.6s">
+                <img
+                  className="client-logo"
+                  src="assets/img/clients/R.jpg"
+                  alt=""
+                />
+              </div>
+            </div>
+            <div className="w-1/2 md:w-1/4 lg:w-1/4">
+              <div className="m-3 wow fadeInUp" data-wow-delay="0.9s">
+                <img
+                  className="client-logo"
+                  src="assets/img/clients/OIP (2).jpg"
+                  alt=""
+                />
+              </div>
+            </div>
+            <div className="w-1/2 md:w-1/4 lg:w-1/4">
+              <div className="m-3 wow fadeInUp" data-wow-delay="1.2s">
+                <img
+                  className="client-logo"
+                  src="assets/img/clients/OIP.jpg"
+                  alt=""
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      {/* Clients Section End */}
+
+ {/* Network Section Start */}
+ <section id="team" className="py-24 text-center bg-blue-100" >
         <div className="container">
           <div className="text-center">
             <h2
@@ -560,7 +531,7 @@ export default function Home() {
                 <div className="team-img relative">
                   <iframe
                     src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d63383.18112514619!2d79.83774576004035!3d6.836669472421819!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3ae25a8d6ec1f8c3%3A0x47810f3e7d084753!2sDehiwala-Mount%20Lavinia!5e0!3m2!1sen!2slk!4v1708248715798!5m2!1sen!2slk"
-                    width="380"
+                    width="360"
                     height="300"
                     style={{ border: "0" }}
                     allowfullscreen=""
@@ -593,61 +564,8 @@ export default function Home() {
       </section>
       {/* network Section End */}
 
-      {/* Clients Section Start */}
-      <div id="clients" className="py-16 bg-blue-100">
-        <div className="container">
-          <div className="text-center">
-            <h2
-              className="mb-12 section-heading wow fadeInDown"
-              data-wow-delay="0.3s"
-            >
-              WE WORK WITH WORLD RENOWNED VEHICLE CARE BRANDS
-            </h2>
-          </div>
-          <div className="flex flex-wrap justify-center">
-            <div className="w-1/2 md:w-1/4 lg:w-1/4">
-              <div className="m-3 wow fadeInUp" data-wow-delay="0.3s">
-                <img
-                  className="client-logo"
-                  src="assets/img/clients/toyota_logo.png"
-                  alt=""
-                />
-              </div>
-            </div>
-            <div className="w-1/2 md:w-1/4 lg:w-1/4">
-              <div className="m-3 wow fadeInUp" data-wow-delay="0.6s">
-                <img
-                  className="client-logo"
-                  src="assets/img/clients/R.jpg"
-                  alt=""
-                />
-              </div>
-            </div>
-            <div className="w-1/2 md:w-1/4 lg:w-1/4">
-              <div className="m-3 wow fadeInUp" data-wow-delay="0.9s">
-                <img
-                  className="client-logo"
-                  src="assets/img/clients/OIP (2).jpg"
-                  alt=""
-                />
-              </div>
-            </div>
-            <div className="w-1/2 md:w-1/4 lg:w-1/4">
-              <div className="m-3 wow fadeInUp" data-wow-delay="1.2s">
-                <img
-                  className="client-logo"
-                  src="assets/img/clients/OIP.jpg"
-                  alt=""
-                />
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      {/* Clients Section End */}
-
       {/* Pricing section Start */}
-      <section id="pricing" className="py-16">
+      <section id="pricing" className="py-16" style={{ backgroundImage: 'url("/assets/31130.jpg")', backgroundSize: 'cover', backgroundPosition: 'center' }}>
         <div className="container">
           <div className="text-center">
             <h2
@@ -687,9 +605,7 @@ export default function Home() {
                   </li>
                   <li className="text-gray-500 leading-9">Claim Times : 1</li>
                 </ul>
-                <a href="#" className="btn">
-                  Get It
-                </a>
+                <button className="btn">Join With Us</button>
               </div>
             </div>
             {/* single pricing table ends */}
@@ -714,9 +630,7 @@ export default function Home() {
                   </li>
                   <li className="text-gray-500 leading-9">Claim times : 2</li>
                 </ul>
-                <a href="#" className="btn">
-                  Get It
-                </a>
+                <button className="btn">Join With Us</button>
               </div>
             </div>
             {/* single pricing table ends */}
@@ -738,9 +652,7 @@ export default function Home() {
                   </li>
                   <li className="text-gray-500 leading-9">Claim times : 3</li>
                 </ul>
-                <a href="#" className="btn">
-                  Get It
-                </a>
+                <button className="btn">Join With Us</button>
               </div>
             </div>
             {/* single pricing table ends */}
@@ -874,7 +786,12 @@ export default function Home() {
                     </div>
                     <div className="w-full">
                       <div className="submit-button mx-3">
-                        <button className="btn" id="form-submit" type="submit" onClick={handleSendMessage}>
+                        <button
+                          className="btn"
+                          id="form-submit"
+                          type="submit"
+                          onClick={handleSendMessage}
+                        >
                           Send Message
                         </button>
                       </div>
@@ -1119,8 +1036,6 @@ export default function Home() {
       {/* End Preloader */}
 
       {/* All js Here */}
-     
-     
     </div>
   );
 }
