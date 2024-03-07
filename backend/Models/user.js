@@ -4,7 +4,7 @@ const validator = require('validator')
 const Schema = mongoose.Schema;
  
 
-const customerSchema = new Schema({
+const userSchema = new Schema({
  
   firstname:{
     type: String,
@@ -29,7 +29,7 @@ const customerSchema = new Schema({
 
 // static signup method
 
-customerSchema.statics.signup = async function(email,password,lastname,firstname) {
+userSchema.statics.signup = async function(email,password,lastname,firstname) {
     //validation
     if(!email || !password || !lastname || !firstname) {
         throw Error('All fields must be filled')
@@ -46,25 +46,25 @@ customerSchema.statics.signup = async function(email,password,lastname,firstname
     }
     const salt =await bcrypt.genSalt(10)
     const hash =await bcrypt.hash(password,salt)
-    const customer =await this.create({email,password:hash,firstname,lastname})
-    return customer
+    const user=await this.create({email,password:hash,firstname,lastname})
+    return user
 }  
 
 // static login method
-customerSchema.statics.login = async function(email,password){
+userSchema.statics.login = async function(email,password){
     if(!email || !password ) {
         throw Error('All fields must be filled')
     }  
-    const customer = await this.findOne({email})
-    if(!customer){
+    const user = await this.findOne({email})
+    if(!user){
         throw Error('Incorrect Email')
     }
-    const match = await bcrypt.compare(password,customer.password)
+    const match = await bcrypt.compare(password,user.password)
     if(!match){
         throw Error("Incorrect password")
     }
-    return customer
+    return user
 }
 
 
-module.exports = mongoose.model('Customer', customerSchema);
+module.exports = mongoose.model('User', userSchema);

@@ -20,7 +20,7 @@ const LoginPage = () => {
     <section className="flex flex-col md:flex-row h-screen items-center">
       <div className="bg-indigo-600 hidden lg:block w-full md:w-1/2 xl:w-2/3 h-screen">
         <img
-          src="https://source.unsplash.com/random"
+           src="assets/R.jpg"
           alt=""
           className="w-full h-full object-cover"
         />
@@ -72,8 +72,9 @@ const LoginPage = () => {
             <button
               disabled={isLoading}
               type="submit"
-              className="w-full block bg-indigo-500 hover:bg-indigo-400 focus:bg-indigo-400 text-white font-semibold rounded-lg px-4 py-3 mt-6"
-            >
+              className="w-full block bg-indigo hover:bg-indigo-400 focus:bg-indigo-400 text-white font-semibold rounded-lg px-4 py-3 mt-6"
+
+         >
               Log In
             </button>
             {error && <div className="error">{error}</div>}

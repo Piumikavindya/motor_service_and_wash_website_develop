@@ -6,15 +6,18 @@ import { MdOutlineDelete, MdPreview } from "react-icons/md";
 import ReservationTable from "../../components/ReservationTable";
 import "../../styles/button.css";
 import Breadcrumb from "../../components/Breadcrumb.jsx";
+import { useParams } from "react-router-dom";
 
 const AllReservations = () => {
   const [reservations, SetReservations] = useState([]);
   const [loading, setLoading] = useState(false);
+  const { id } = useParams();
+
     // Fetch users data from your API endpoint
     useEffect(() => {
       setLoading(true);
       axios
-        .get("http://localhost:5555/reservation/view-reservations") // Update the API endpoint
+        .get(`http://localhost:5555/reservation/view-reservations`) // Update the API endpoint
         .then((response) => {
           SetReservations(response.data);
           setLoading(false);
@@ -29,13 +32,13 @@ const AllReservations = () => {
     <div className="p-4">
       <Breadcrumb
      crumbs={[
-       { label: "Home", link: "/homepage" },
+       { label: "Home", link: "/" },
        { label: "User Reservation List", link: "/reservation/allreservations" },
      ]}
      selected={(crumb) => console.log(`Selected: ${crumb.label}`)}
    />
   <div className="container mx-auto py-6 px-4 flex items-center justify-between">
-        <h1 class="text-3xl py-4 border-b mb-10">Registered User List</h1>
+        <h1 class="text-3xl py-4 border-b mb-10">Registered Reservation List</h1>
 
         <div class="flex items-center">
           <button onclick="popuphandler(true)" class="button">

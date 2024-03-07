@@ -5,6 +5,7 @@ const reservation = require("../models/reservation");
 
 exports.create = async (req, res) => {
   const {
+  
     VehicleType,
     VehicleNumber,
     Services,
@@ -12,6 +13,7 @@ exports.create = async (req, res) => {
     Date,
     Time,
     Comments,
+    User
   } = req.body;
   // response will send to frontend
   const newReservation = new Reservation({
@@ -22,6 +24,7 @@ exports.create = async (req, res) => {
     Date,
     Time,
     Comments,
+    User
   });
   //save the data in the database
   try {
@@ -37,14 +40,15 @@ exports.create = async (req, res) => {
 
 // get the all the users
 exports.viewReservations = async (req, res) => {
-  Reservation.find()
-    .then((Reservations) => {
-      res.json(Reservations);
-    })
-    .catch((err) => {
-      console.log(err);
-    });
+  try {
+    const userId = req.params.userId;
+    const userReservations = await Reservation.find({ userId });
+    res.json(userReservations);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
 };
+
 
 // view details of perticular user
 exports.previewReservation = async (req, res) => {

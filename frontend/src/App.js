@@ -16,16 +16,25 @@ import PreviewReservation from "./pages/Reservation/PreviewReservation";
 import UpadteReservation from "./pages/Reservation/UpdateReservation";
 import { useAuthContext } from "./hooks/useAuthContext";
 function App() {
-  const { customer } = useAuthContext();
+  const { user } = useAuthContext();
   return (
     <Router>
       <Routes>
-        <Route path="/" 
-        element={<Home /> }
-         />
-        <Route path="/login" element={!customer ? <LoginPage /> :<Navigate to = "/"/>} />
-
-        <Route path="/signup" element={!customer ? <SignUpPage /> :<Navigate to = "/"/>} />
+        <Route path="/" element={<Home />} />
+        <Route
+          path="/login"
+          element={!user ? <LoginPage /> : <Navigate to="/" />}
+        />
+        <Route
+          path="/signup"
+          element={
+            !user ? (
+              <SignUpPage />
+            ) : (
+              <Navigate to={`/reservation/allreservations`} />
+            )
+          }
+        />{" "}
         <Route path="/reservation/create" element={<CreateReservation />} />
         <Route path="/reservation/delete/:id" element={<DeleteReservation />} />
         <Route

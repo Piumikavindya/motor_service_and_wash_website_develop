@@ -8,7 +8,7 @@ export default function Home() {
   const [email, setEmail] = useState("");
   const [subject, setSubject] = useState("");
   const [name, setName] = useState("");
-  const { customer } = useAuthContext();
+  const { user } = useAuthContext();
   const handleSendMessage = () => {
     // Here, you can implement the logic to send the message, such as making an API request.
     // You can use the 'message' state to get the message content.
@@ -24,11 +24,11 @@ export default function Home() {
       {/* Header Area wrapper Start */}
       <header id="header-wrap" className="relative">
         {/* Navbar Start */}
-        <div className="navigation fixed top-0 left-0 w-full z-30 duration-300 bg-gray-900">
+        <div className="navigation fixed top-0 left-0 w-full z-30 duration-300 bg-white">
           <div className="container">
             <nav className="navbar py-2 navbar-expand-lg flex justify-between items-center relative duration-300">
               <a className="navbar-brand" href="index.html">
-                <img src="assets/img/logo.svg" alt="Logo" />
+              <img src="assets/img/new.png" alt="Logo" width="100" height="50" />
               </a>
               <button
                 className="navbar-toggler focus:outline-none block lg:hidden"
@@ -100,9 +100,9 @@ export default function Home() {
                   </li>
                 </ul>
               </div>
-              {customer && (
+              {user && (
                 <div>
-                  <span>{customer.email}</span>
+                  <span>{user.email}</span>
                   <button
                     onClick={handleClick}
                     className="text-blue-600 border border-blue-600 px-10 py-3 rounded-full duration-300 hover:bg-blue-600 hover:text-white"
@@ -111,7 +111,7 @@ export default function Home() {
                   </button>
                 </div>
               )}
-              {!customer && (
+              {!user && (
                 <div className="header-btn hidden sm:block sm:absolute sm:right-0 sm:mr-16 lg:static lg:mr-0">
                   <button className="text-blue-600 border border-blue-600 px-10 py-3 rounded-full duration-300 hover:bg-blue-600 hover:text-white">
                     <Link to="signup">Signup</Link>
@@ -131,7 +131,7 @@ export default function Home() {
         id="hero-area"
         className="bg-blue-100 pt-48 pb-10"
         style={{
-          backgroundImage: `url('/assets/mechanic.png')`,
+          backgroundImage: `url('/assets/Mechanic.png')`,
           backgroundRepeat: "no-repeat",
           backgroundSize: "cover",
           backgroundPosition: "center",
@@ -139,41 +139,36 @@ export default function Home() {
       >
         <div className="container">
           <div className="flex justify-between">
-            <div className="w-full text-center">
-              <h2
-                className="text-4xl font-bold leading-snug text-black-700 mb-10 wow fadeInUp"
-                data-wow-delay="1s"
-              >
-                A Complete Care Experience for Your Ride
-              </h2>
-              <p className="italic text-black text-2xl font-bold py-5 px-20 mb-5">
-                Your go-to destination for premium vehicle care. We specialize
-                in top-notch vehicle wash and motor services, ensuring your
-                vehicle looks its best and runs smoothly. Explore our services
-                and experience excellence like never before. Trust us to make
-                your vehicle shine inside and out, with precision and care.
-              </p>
+          <div class="mx-auto bg-white bg-opacity-30 shadow-md rounded-lg overflow-hidden">
+  <div class="p-8">
+    <div class="w-full text-center">
+      <h2 class="text-4xl font-bold leading-snug text-black-700 mb-10 wow fadeInUp" data-wow-delay="1s">
+        A Complete Care Experience for Your Ride
+      </h2>
+      <p class="italic text-black text-2xl font-bold py-5 px-20 mb-5">
+        Your go-to destination for premium vehicle care. We specialize in top-notch vehicle wash and motor services, ensuring your vehicle looks its best and runs smoothly. Explore our services and experience excellence like never before. Trust us to make your vehicle shine inside and out, with precision and care.
+      </p>
 
-              <div
-                className="text-center mb-10 wow fadeInUp"
-                data-wow-delay="1.2s"
-              >
-                {!customer && (
-                <div className="header-btn hidden sm:block sm:absolute sm:right-0 sm:mr-16 lg:static lg:mr-0">
-                  <button className="text-white font-bold bg-pink-800 border border-blue-600 px-10 py-3 rounded-full duration-300 hover:bg-blue-600 hover:text-white">
-                    <Link to="login">Login</Link>
-                  </button>
-                </div>
-              )}
-              </div>
-            </div>
+      <div class="text-center mb-10 wow fadeInUp" data-wow-delay="1.2s">
+        {!user && (
+        <div class="header-btn hidden sm:block sm:absolute sm:right-0 sm:mr-16 lg:static lg:mr-0">
+          <button class="text-white font-bold bg-pink-800 border border-blue-600 px-10 py-3 rounded-full duration-300 hover:bg-blue-600 hover:text-white">
+            <a href="login">Get Started</a>
+          </button>
+        </div>
+        )}
+      </div>
+    </div>
+  </div>
+</div>
+
           </div>
         </div>
       </section>
       {/* Hero Area End */}
 
       {/*   Services Section Start*/}
-      <section id="services" className="py-24" style={{ backgroundImage: 'url("/assets/31130.jpg")', backgroundSize: 'cover', backgroundPosition: 'center' }}>
+      <section id="services" className="py-24" >
   <div className="container">
     <div className="text-center">
       <h2 className="mb-12 section-heading wow fadeInDown" data-wow-delay="0.3s">Our Services</h2>
@@ -383,7 +378,7 @@ export default function Home() {
      
 
       {/* Clients Section Start */}
-      <div id="clients" className="py-16 bg-blue-100" style={{ backgroundImage: 'url("/assets/31130.jpg")', backgroundSize: 'cover', backgroundPosition: 'center' }}>
+      <div id="clients"  >
         <div className="container">
           <div className="text-center">
             <h2
@@ -565,7 +560,7 @@ export default function Home() {
       {/* network Section End */}
 
       {/* Pricing section Start */}
-      <section id="pricing" className="py-16" style={{ backgroundImage: 'url("/assets/31130.jpg")', backgroundSize: 'cover', backgroundPosition: 'center' }}>
+      <section id="pricing" className="py-16" >
         <div className="container">
           <div className="text-center">
             <h2

@@ -1,5 +1,5 @@
 const express = require('express')
-const {signupUser,loginUser} =require('../controllers/customer')
+const {signupUser,loginUser} =require('../controllers/user')
 const router = express.Router()
 
 // login route

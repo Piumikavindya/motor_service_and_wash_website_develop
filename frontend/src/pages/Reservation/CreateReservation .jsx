@@ -56,7 +56,7 @@ const CreateReservations  = () => {
     <div className="app-container p-8 rounded border border-gray-200">
    <Breadcrumb
      crumbs={[
-       { label: "Home", link: "/homepage" },
+       { label: "Home", link: "/" },
        { label: "User Reservation List", link: "/reservation/allreservations" },
        { label: "New Reservation", link: "/reservation/create" },
      ]}

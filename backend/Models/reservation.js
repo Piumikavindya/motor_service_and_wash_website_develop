@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const reservationSchema = new Schema({
+   
     VehicleType: { 
         type: String,
         required: true,
@@ -30,6 +31,7 @@ const reservationSchema = new Schema({
         type: String,
         required: true,
     },
+
     },
     {
         timestamps: true,
