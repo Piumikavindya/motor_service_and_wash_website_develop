@@ -1,51 +1,53 @@
+const mongoose = require('mongoose');
 const Reservation = require("../models/reservation");
 const reservation = require("../models/reservation");
 
-// request from the frontend
-
 exports.create = async (req, res) => {
+  const accountId = req.params.accountId;
   const {
-  
-    VehicleType,
-    VehicleNumber,
-    Services,
-    ServiceStation,
-    Date,
-    Time,
-    Comments,
-    User
+      VehicleType,
+      VehicleNumber,
+      Services,
+      ServiceStation,
+      Date,
+      Time,
+      Comments,
   } = req.body;
-  // response will send to frontend
-  const newReservation = new Reservation({
-    VehicleType,
-    VehicleNumber,
-    Services,
-    ServiceStation,
-    Date,
-    Time,
-    Comments,
-    User
-  });
-  //save the data in the database
-  try {
-    console.log("New Reservation:", newReservation);
-    await newReservation.save();
 
-    res.json({ reservation: newReservation });
+  try {
+      // Create a new reservation
+      const newReservation = new Reservation({
+          accountId,
+          VehicleType,
+          VehicleNumber,
+          Services,
+          ServiceStation,
+          Date,
+          Time,
+          Comments,
+      });
+
+      // Save the reservation
+      const createdReservation = await newReservation.save();
+
+      res.json(createdReservation);
   } catch (error) {
-    console.error("Error saving reservation:", error);
-    res.status(500).json({ error: "Internal Server Error" });
+      console.error("Error in createReservation:", error);
+      res.status(500).json({ error: error.message });
   }
 };
-
-// get the all the users
 exports.viewReservations = async (req, res) => {
+  const accountId = req.params.accountId;
+
   try {
-    const userId = req.params.userId;
-    const userReservations = await Reservation.find({ userId });
-    res.json(userReservations);
-  } catch (err) {
-    res.status(500).json({ message: err.message });
+    // Find reservations based on the account ID
+    const reservations = await Reservation.find({ accountId });
+
+    res.json(reservations);
+  } catch (error) {
+    console.error("Error in viewReservations:", error);
+    // Handle errors and send an appropriate response
+    res.status(500).json({ error: error.message });
   }
 };
 
@@ -111,15 +113,16 @@ exports.updateReservation = async (req, res) => {
 };
 
 //delete reservation
+
 exports.deleterReservation = async (req, res) => {
   let reservationId = req.params.id;
 
-  await reservation.findByIdAndDelete(reservationId).then(() => {
-    res
-      .status(200)
-      .send({ status: "Reservation is deleted" })
-      .catch((err) => {
-        res.status(500).send({ status: "Error with delete reservation" });
-      });
-  });
+  try {
+    await reservation.findByIdAndDelete(reservationId);
+    res.status(200).send({ status: "Reservation is deleted" });
+  } catch (err) {
+    console.error(err);
+    res.status(500).send({ status: "Error with delete reservation", error: err.message });
+  }
 };
+

@@ -2,41 +2,44 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const reservationSchema = new Schema({
-   
-    VehicleType: { 
+    accountId: {
+        type: String,
+        required: true, 
+    },
+    VehicleType: {
         type: String,
         required: true,
     },
-    VehicleNumber: { 
+    VehicleNumber: {
         type: String,
         required: true,
     },
-    Services: { 
+    Services: {
         type: String,
         required: true,
     },
-    ServiceStation: { 
+    ServiceStation: {
         type: String,
         required: true,
     },
-    Date: { 
-        type: mongoose.Schema.Types.Mixed, 
-        required: true,
-    },
-    Time: { 
+    Date: {
         type: mongoose.Schema.Types.Mixed,
         required: true,
-    }, 
-    Comments: { 
+    },
+    Time: {
+        type: mongoose.Schema.Types.Mixed,
+        required: true,
+    },
+    Comments: {
         type: String,
         required: true,
     },
-
-    },
-    {
-        timestamps: true,
+    createdAt: {
+        type: Date,
+        default: Date.now
     }
-    );
-
+}, {
+    timestamps: true,
+});
 
 module.exports = mongoose.model('Reservation', reservationSchema);

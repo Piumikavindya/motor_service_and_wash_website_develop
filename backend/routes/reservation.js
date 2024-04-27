@@ -12,15 +12,13 @@ const {
 //router.use(requireAuth);
 
 // Add resrvation create route
-router.post("/create", create, (req, res) => {
-  console.log("Received a request to create a user:", req.body);
-  create(req, res);
-});
+router.post("/create/:accountId", create);
+
 // virw all reservation
-router.get("/view-reservations", viewReservations);
-router.get("/preview-reservation/:id", previewReservation);
-router.put("/update/:id", updateReservation);
-router.delete("/delete/:id", deleterReservation);
+router.get("/view-reservations/:accountId", viewReservations); 
+router.get("/preview-reservation/:accountId/:id", previewReservation);
+router.put("/update/:accountId/:id", updateReservation);
+router.delete("/delete/:accountId/:id", deleterReservation);
 // add signIn route
 //router.post("/signIn",signInValidator, validate, signIn);
 //Add forget Password route

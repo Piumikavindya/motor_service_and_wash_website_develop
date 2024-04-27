@@ -1,135 +1,27 @@
 import React, { useState } from "react";
-import { useLogout } from "../hooks/useLogout";
-import { Link } from "react-router-dom";
-import { useAuthContext } from "../hooks/useAuthContext";
-import "../styles/animation.css";
-export default function Home() {
+import { useLogout } from "../../../hooks/useLogout.js";
+import { Link, useNavigate, useParams } from "react-router-dom";
+import { useAuthContext } from "../../../hooks/useAuthContext.js";
+import "../../../styles/animation.css";
+import Nav from "../../../components/UserNavBar.jsx";
+
+export default function HomePage() {
   const [message, setMessage] = useState("");
-  const [accountId, setAccountId] = useState("");
-  const [subject, setSubject] = useState("");
-  const [name, setName] = useState("");
+  const { accountId } = useParams();
   const { user } = useAuthContext();
-  const handleSendMessage = () => {
-    // Here, you can implement the logic to send the message, such as making an API request.
-    // You can use the 'message' state to get the message content.
-    alert("Message sent: " + message);
-  };
+  const navigate = useNavigate(); // Added parentheses here
   const { logout } = useLogout();
-  const handleClick = () => {
-    logout();
+
+ 
+  const handleNavigate = () => {
+    navigate(`/reservation/${accountId}`);
   };
 
   return (
     <div>
       {/* Header Area wrapper Start */}
       <header id="header-wrap" className="relative">
-        {/* Navbar Start */}
-        <div
-          className="navigation fixed top-0 left-0 w-full z-30 duration-300 bg-white"
-          style={{ height: "80px" }}
-        >
-          <div className="container">
-            <nav className="navbar py-2 navbar-expand-lg flex justify-between items-center relative duration-300">
-              <a className="navbar-brand" href="index.html">
-                <img
-                  src="assets/img/new.png"
-                  alt="Logo"
-                  width="100"
-                  height="50"
-                />
-              </a>
-              <button
-                className="navbar-toggler focus:outline-none block lg:hidden"
-                type="button"
-                data-toggle="collapse"
-                data-target="#navbarSupportedContent"
-                aria-controls="navbarSupportedContent"
-                aria-expanded="false"
-                aria-label="Toggle navigation"
-              >
-                <span className="toggler-icon"></span>
-                <span className="toggler-icon"></span>
-                <span className="toggler-icon"></span>
-              </button>
-
-              <div
-                className="collapse navbar-collapse hidden lg:block duration-300 shadow absolute top-100 left-0 mt-full bg-white z-20 px-5 py-3 w-full lg:static lg:bg-transparent lg:shadow-none"
-                id="navbarSupportedContent"
-              >
-                <ul className="navbar-nav mr-auto justify-center items-center lg:flex">
-                  <li className="nav-item">
-                    <a
-                      className="page-scroll active text-white font-bold"
-                      href="#"
-                    >
-                      Home
-                    </a>
-                  </li>
-                  <li className="nav-item">
-                    <a
-                      className="page-scroll text-white font-bold"
-                      href="/service"
-                    >
-                      Services
-                    </a>
-                  </li>
-                  <li className="nav-item">
-                    <a
-                      className="page-scroll text-white font-bold"
-                      href="/about"
-                    >
-                      About
-                    </a>
-                  </li>
-                  <li className="nav-item">
-                    <a
-                      className="page-scroll text-white font-bold"
-                      href="/network"
-                    >
-                      Network
-                    </a>
-                  </li>
-
-                  <li className="nav-item">
-                    <a
-                      className="page-scroll text-white font-bold"
-                      href="/offers"
-                    >
-                      Offers
-                    </a>
-                  </li>
-                  <li className="nav-item">
-                    <a
-                      className="page-scroll text-white font-bold"
-                      href="/contact"
-                    >
-                      Contact
-                    </a>
-                  </li>
-                </ul>
-              </div>
-              {user && (
-                <div>
-                  <span>{user.accountId}</span>
-                  <button
-                    onClick={handleClick}
-                    className="text-white bg-blue-600 border border-blue-600 px-6 py-2 rounded-md duration-300 hover:bg-blue-300 hover:text-white"
-                  >
-                    Log out
-                  </button>
-                </div>
-              )}
-              {!user && (
-                <div className="header-btn hidden sm:block sm:absolute sm:right-0 sm:mr-16 lg:static lg:mr-0">
-                  <button className="text-white bg-blue-600 border border-blue-600 px-6 py-2 rounded-md duration-300 hover:bg-blue-300 hover:text-white">
-                    <Link to="login">login</Link>
-                  </button>
-                </div>
-              )}
-            </nav>
-          </div>
-        </div>
-        {/* Navbar End */}
+      <Nav/>
       </header>
 
       {/* Header Area wrapper End */}
@@ -155,8 +47,13 @@ export default function Home() {
               looks its best and runs smoothly. Explore our services and
               experience excellence like never before.
             </p>
-            <button class="mt-8 text-white uppercase py-4 text-base font-light px-10 border border-white hover:bg-white hover:bg-opacity-10">
-            <a href="signup">Get Started</a>            </button>
+            <button
+              class="mt-8 text-white uppercase py-4 text-base font-light px-10 border border-white hover:bg-white hover:bg-opacity-10"
+              onClick={handleNavigate}
+            >
+              {" "}
+              Make Reservation
+            </button>
           </div>
         </div>
       </div>
@@ -178,7 +75,7 @@ export default function Home() {
               <div class="m-3 wow slideInLeft" data-wow-delay="0.3s">
                 <img
                   class="client-logo"
-                  src="assets/img/clients/toyota_logo.png"
+                  src="../assets/img/clients/toyota_logo.png"
                   alt=""
                 />
               </div>
@@ -187,7 +84,7 @@ export default function Home() {
               <div class="m-3 wow slideInLeft" data-wow-delay="0.6s">
                 <img
                   class="client-logo"
-                  src="assets/img/clients/R.jpg"
+                  src="../assets/img/clients/R.jpg"
                   alt=""
                 />
               </div>
@@ -196,7 +93,7 @@ export default function Home() {
               <div class="m-3 wow slideInLeft" data-wow-delay="0.9s">
                 <img
                   class="client-logo"
-                  src="assets/img/clients/OIP (2).jpg"
+                  src="../assets/img/clients/OIP (2).jpg"
                   alt=""
                 />
               </div>
@@ -205,7 +102,7 @@ export default function Home() {
               <div class="m-3 wow slideInLeft" data-wow-delay="1.2s">
                 <img
                   class="client-logo"
-                  src="assets/img/clients/OIP.jpg"
+                  src="../assets/img/clients/OIP.jpg"
                   alt=""
                 />
               </div>
@@ -226,16 +123,16 @@ export default function Home() {
             >
               <div className="mx-3 mb-8">
                 <div className="footer-logo mb-3">
-                <img
-                  src="assets/img/new.png"
-                  alt="Logo"
-                  width="100"
-                  height="50"
-                />
+                  <img
+                    src="../assets/img/new.png"
+                    alt="Logo"
+                    width="100"
+                    height="50"
+                  />
                 </div>
                 <p className="text-gray-300">
-                Trust us to make your
-              vehicle shine inside and out, with precision and care.
+                  Trust us to make your vehicle shine inside and out, with
+                  precision and care.
                 </p>
               </div>
             </div>

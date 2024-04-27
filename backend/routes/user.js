@@ -1,14 +1,12 @@
-const express = require('express')
-const {signupUser,loginUser} =require('../controllers/user')
-const router = express.Router()
+// routes/userRoutes.js
 
-// login route
+const express = require('express');
+const router = express.Router();
+const { signupUser, loginUser } = require('../controllers/user');
 
-router.post('/login' ,loginUser)
-
-// signup route
-router.post('/signup' , signupUser)
-
+// Define routes
+router.post('/signup', signupUser);
+router.post('/login', loginUser);
 
 
 

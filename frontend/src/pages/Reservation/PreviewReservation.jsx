@@ -11,12 +11,12 @@ const PreviewReservations = () => {
   const cancelButtonRef = useRef(null);
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
-  const { id } = useParams();
+  const { accountId} = useParams();
   const { enqueueSnackbar } = useSnackbar();
 
   const handleOutsideClick = () => {
     setOpen(false);
-    navigate("/reservation/allreservations");
+    navigate(`/reservation/${accountId}`);
   };
   
   return (

@@ -1,7 +1,5 @@
 import { useAuthContext } from "./useAuthContext"
 
-
-
 export const useLogout = () =>{
     const {dispatch} =useAuthContext()
 
@@ -11,6 +9,4 @@ export const useLogout = () =>{
         dispatch({type:'LOGOUT'})
     }
     return {logout}
-
-
 }

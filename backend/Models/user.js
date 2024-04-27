@@ -5,7 +5,11 @@ const Schema = mongoose.Schema;
  
 
 const userSchema = new Schema({
- 
+ accountId: {
+    type: String,
+    
+    unique: true,
+  },
   firstname:{
     type: String,
     required: true,
@@ -29,7 +33,7 @@ const userSchema = new Schema({
 
 // static signup method
 
-userSchema.statics.signup = async function(email,password,lastname,firstname) {
+userSchema.statics.signup = async function(email,password,lastname,firstname,accountId) {
     //validation
     if(!email || !password || !lastname || !firstname) {
         throw Error('All fields must be filled')
@@ -46,18 +50,22 @@ userSchema.statics.signup = async function(email,password,lastname,firstname) {
     }
     const salt =await bcrypt.genSalt(10)
     const hash =await bcrypt.hash(password,salt)
-    const user=await this.create({email,password:hash,firstname,lastname})
+    const user=await this.create({email,password:hash,firstname,lastname,accountId})
     return user
 }  
 
 // static login method
-userSchema.statics.login = async function(email,password){
-    if(!email || !password ) {
+userSchema.statics.login = async function(email,password,accountId){
+    if(!email || !password || !accountId ) {
         throw Error('All fields must be filled')
     }  
     const user = await this.findOne({email})
     if(!user){
         throw Error('Incorrect Email')
+    }
+    const account = await this.findOne({accountId})
+    if(!account){
+        throw Error('Incorrect Account ID')
     }
     const match = await bcrypt.compare(password,user.password)
     if(!match){
