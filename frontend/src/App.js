@@ -6,16 +6,17 @@ import {
   Navigate,
   useParams,
 } from "react-router-dom";
-import Home from "./pages/Home";
-import LoginPage from "./pages/LoginPage";
-import SignUpPage from "./pages/SignUpPage";
+import Home from "./pages/User/Home";
+import LoginPage from "./pages/User/LoginPage";
+import SignUpPage from "./pages/User/SignUpPage";
 import HomePage from "./pages/Reservation/UserHome/HomePage";
 import CreateReservation from "./pages/Reservation/CreateReservation ";
-import Service from "./pages/Service";
-import About from "./pages/About";
-import Network from "./pages/Network";
-import Offers from "./pages/Offers";
-import Contact from "./pages/Contact";
+import Service from "./pages/User/Service";
+import About from "./pages/User/About";
+import Network from "./pages/User/Network";
+import Offers from "./pages/User/Offers";
+import Contact from "./pages/User/Contact";
+import { AuthContextProvider } from "./context/Authcontext";
 
 import ServiceUser from "./pages/Reservation/UserHome/ServiceUser";
 import AboutUser from "./pages/Reservation/UserHome/AboutUser";
@@ -28,6 +29,16 @@ import AllReservations from "./pages/Reservation/AllReservations";
 import PreviewReservation from "./pages/Reservation/PreviewReservation";
 import UpadteReservation from "./pages/Reservation/UpdateReservation";
 import { useAuthContext } from "./hooks/useAuthContext";
+import ManageUsers from "./pages/admin/ManageUser/ManageUser";
+import AdminHome from "./pages/admin/AdminHome";
+import ManageReservations from "./pages/admin/ManageResrvations/ManageReservations";
+import ApprovalForm from "./pages/admin/ManageResrvations/ApprovalForm";
+import ContactForms from "./pages/admin/Contact Forms/ContactForms";
+import ForgetPasswordPage from "./pages/User/Profile/ForgetPassword";
+import ResetPasswordPage from "./pages/User/Profile/ResetPassword";
+import ChangeAccountDetails from "./pages/User/Profile/ChangeAccountDetails";
+import ChangePassword from "./pages/User/Profile/ChangePassword";
+import UserProfile from "./pages/User/Profile/UserProfile";
 
 function App() {
   const { user } = useAuthContext();
@@ -41,22 +52,34 @@ function App() {
 
   return (
     <Router>
+      
       <Routes>
         <Route path="/" element={<Home />} />
         <Route
           path="/login"
-          element={!user ? <LoginPage /> : <Navigate to="/" />}
+          element={
+            !user ? (
+              <LoginPage />
+            ) : user.email === "admin@gmail.com" ? (
+              <Navigate to="/adminhome" />
+            ) : (
+              <Navigate to={`/home/${user.accountId}`} />
+            )
+          }
         />
         <Route
           path="/signup"
           element={
             !user ? (
               <SignUpPage />
+            ) : user.email === "admin@gmail.com" ? (
+              <Navigate to="/adminhome" />
             ) : (
               <Navigate to={`/home/${user.accountId}`} />
             )
           }
         />
+        
         <Route path="/home/:accountId" element={<HomePage />} />
         <Route
           path="/reservation/create/:accountId"
@@ -85,7 +108,20 @@ function App() {
         <Route path="/network/:accountId" element={<NetworkUser />} />
         <Route path="/offers/:accountId" element={<OffersUser />} />
         <Route path="/contact/:accountId" element={<ContactUser />} />
+
+        <Route path="/user/preview-users" element={<ManageUsers />} />
+        <Route path="/reservation/view-reservations" element={<ManageReservations />} />
+        <Route path="/ApprovalForm/:id" element={<ApprovalForm />} />
+        <Route path="/ContactForms" element={<ContactForms/>} />
+        <Route path="/adminhome" element={<AdminHome />} />
+        <Route path="/forgetpassword" element={<ForgetPasswordPage />} />
+        <Route path="/reset-password/:resetToken" element={<ResetPasswordPage />} />
+        <Route path="/changeaccountdetails" element={<ChangeAccountDetails />} />
+        <Route path="/changepassword" element={<ChangePassword />} />
+        <Route path="/userprofile/:accountId" element={<UserProfile />} />
+
       </Routes>
+      
     </Router>
   );
 }

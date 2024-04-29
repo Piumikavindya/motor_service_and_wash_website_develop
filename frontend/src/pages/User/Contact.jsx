@@ -1,21 +1,39 @@
 import React, { useState } from "react";
-import { useLogout } from "../hooks/useLogout";
+import axios from "axios"; // Import Axios for making HTTP requests
+import { useLogout } from "../../hooks/useLogout";
 import { Link } from "react-router-dom";
-import { useAuthContext } from "../hooks/useAuthContext";
-import NavBar from "../components/NavBar";
+import { useAuthContext } from "../../hooks/useAuthContext";
+import NavBar from "../../components/NavBar";
 
-export default function Home() {
+export default function Contact() {
   const [message, setMessage] = useState("");
   const [email, setEmail] = useState("");
   const [subject, setSubject] = useState("");
   const [name, setName] = useState("");
   const { user } = useAuthContext();
-  const handleSendMessage = () => {
-    // Here, you can implement the logic to send the message, such as making an API request.
-    // You can use the 'message' state to get the message content.
-    alert("Message sent: " + message);
-  };
   const { logout } = useLogout();
+
+  const handleSendMessage = async () => {
+    try {
+      // Make a POST request to the backend API
+      await axios.post("http://localhost:5555/contact/send-message", {
+        name,
+        email,
+        subject,
+        message
+      });
+      alert("Message sent successfully!");
+      // Clear form fields after successful submission
+      setName("");
+      setEmail("");
+      setSubject("");
+      setMessage("");
+    } catch (error) {
+      console.error("Error sending message:", error);
+      alert("Failed to send message. Please try again later.");
+    }
+  };
+
   const handleClick = () => {
     logout();
   };
@@ -29,28 +47,18 @@ export default function Home() {
 
       {/* Header Area wrapper End */}
 
-
-       {/* Contact Section Start */}
-       <section id="contact" className="py-24 text-center bg-blue-100">
+      <section id="contact" className="py-24 text-center bg-blue-100">
         <div className="container">
           <div className="text-center">
-            <h2
-              className="mb-12 text-4xl text-gray-700 font-bold tracking-wide wow fadeInDown"
-              data-wow-delay="0.3s"
-            >
-              Contact
+            <h2 className="mb-12 text-4xl text-gray-700 font-bold tracking-wide wow fadeInDown" data-wow-delay="0.3s">
+              Contact Us
             </h2>
           </div>
 
-          <div
-            className="flex flex-wrap contact-form-area wow fadeInUp"
-            data-wow-delay="0.4s"
-          >
+          <div className="flex flex-wrap contact-form-area wow fadeInUp" data-wow-delay="0.4s">
             <div className="w-full md:w-1/2">
               <div className="contact">
-                <h2 className="uppercase font-bold text-xl text-gray-700 mb-5 ml-3">
-                  Contact Form
-                </h2>
+                <h2 className="uppercase font-bold text-xl text-gray-700 mb-5 ml-3">Contact Form</h2>
                 <form id="contactForm" action="assets/contact.php">
                   <div className="flex flex-wrap">
                     <div className="w-full sm:w-1/2 md:w-full lg:w-1/2">
@@ -118,8 +126,8 @@ export default function Home() {
                         <button
                           className="btn"
                           id="form-submit"
-                          type="submit"
-                          onClick={handleSendMessage}
+                          type="button" // Change type to button
+                          onClick={handleSendMessage} // Call handleSendMessage on button click
                         >
                           Send Message
                         </button>
@@ -184,6 +192,7 @@ export default function Home() {
             </div>
           </div>
         </div>
+        
       </section>
       {/* Contact Section End */}
 

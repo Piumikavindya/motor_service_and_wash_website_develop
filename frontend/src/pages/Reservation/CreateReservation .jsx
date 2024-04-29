@@ -13,6 +13,7 @@ const CreateReservations = () => {
   const [Time, setTime] = useState("");
   const [Comments, setComments] = useState("");
   const [loading, setLoading] = useState(false);
+  const [showAlert, setShowAlert] = useState(false); // New state for showing alert
   const { enqueueSnackbar } = useSnackbar();
   const navigate = useNavigate();
   const { accountId } = useParams();
@@ -36,9 +37,9 @@ const CreateReservations = () => {
         newResrvation
       )
       .then(() => {
-        alert("Reservation is Created successfully");
-
         setLoading(false);
+        setShowAlert(true); // Show alert on successful creation
+        // Clear form fields
         setServiceStation("");
         setVehicleNumber("");
         setVehicleType("");
@@ -72,6 +73,11 @@ const CreateReservations = () => {
                 with a confirmation call, ensuring your booking is swiftly
                 confirmed. Experience seamless scheduling without the fuss.{" "}
               </p>
+              {showAlert && (
+                <div className="bg-green-200 text-green-700 p-4 mb-4 rounded">
+                  Reservation created successfully!
+                </div>
+              )}
               <form onSubmit={CreateNewReservations}>
                 <div className="mb-4">
                   <select
@@ -151,13 +157,13 @@ const CreateReservations = () => {
                 </div>
                 <div></div>
                 <div style={{ textAlign: "center", marginTop: "20px" }}>
-                  <button type="submit" class="btn btn-primary">
+                  <button type="submit" className="btn btn-primary">
                     Send
                   </button>
                   <span style={{ margin: "0 10px" }}></span>
                   <button
                     onClick={() => navigate(`/reservation/${accountId}`)}
-                    class="btn btn-primary"
+                    className="btn btn-primary"
                   >
                     Back
                   </button>

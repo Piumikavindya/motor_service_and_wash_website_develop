@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import { useSignup } from "../hooks/useSignup";
-import { useLogout } from "../hooks/useLogout";
-import { useAuthContext } from "../hooks/useAuthContext";
+import { useSignup } from "../../hooks/useSignup";
+import { useLogout } from "../../hooks/useLogout";
+import { useAuthContext } from "../../hooks/useAuthContext";
 import { useParams } from 'react-router-dom';
 
 const SignUpPage = () => {
@@ -26,7 +26,7 @@ const handleClick = () => {
       <a href="#">
       <div
           className="navigation fixed top-0 left-0 w-full z-30 duration-300 bg-white"
-          style={{ height: "80px" }}
+          style={{ height: "90px" }}
         >
           <div className="container">
             <nav className="navbar py-2 navbar-expand-lg flex justify-between items-center relative duration-300">

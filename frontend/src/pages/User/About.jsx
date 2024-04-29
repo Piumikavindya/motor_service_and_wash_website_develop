@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import { useLogout } from "../hooks/useLogout";
+import { useLogout } from "../../hooks/useLogout";
 import { Link } from "react-router-dom";
-import { useAuthContext } from "../hooks/useAuthContext";
-import NavBar from "../components/NavBar";
+import { useAuthContext } from "../../hooks/useAuthContext";
+import NavBar from "../../components/NavBar";
 
 export default function Home() {
   const [message, setMessage] = useState("");

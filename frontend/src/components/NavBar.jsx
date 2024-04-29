@@ -14,7 +14,10 @@ export default function NavBar() {
   };
   
   return (
-    <div>
+    <div
+    className="navigation fixed top-0 left-0 w-full z-30 duration-300 bg-white"
+    style={{ height: "90px" }}
+  >
        {/* Navbar Start */}
        <div className="navigation fixed top-0 left-0 w-full z-30 duration-300 bg-white">
           <div className="container">

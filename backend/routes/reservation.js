@@ -5,6 +5,8 @@ const {
   viewReservations,
   deleterReservation,
   previewReservation,
+  viewAllReservations,
+  previewOneReservation,
 } = require("../controllers/reservation");
 
 //onst requireAuth = require("../middleware/requireAuth");
@@ -16,6 +18,8 @@ router.post("/create/:accountId", create);
 
 // virw all reservation
 router.get("/view-reservations/:accountId", viewReservations); 
+router.get("/view-reservations", viewAllReservations); 
+router.get("/preview-reservation/:id", previewOneReservation);
 router.get("/preview-reservation/:accountId/:id", previewReservation);
 router.put("/update/:accountId/:id", updateReservation);
 router.delete("/delete/:accountId/:id", deleterReservation);

@@ -51,7 +51,37 @@ exports.viewReservations = async (req, res) => {
   }
 };
 
+exports.viewAllReservations = async (req, res) => {
+  const id = req.params.id;
 
+  try {
+    // Find reservations based on the account ID
+    const reservations = await Reservation.find({ id});
+
+    res.json(reservations);
+  } catch (error) {
+    console.error("Error in viewReservations:", error);
+    // Handle errors and send an appropriate response
+    res.status(500).json({ error: error.message });
+  }
+};
+exports.previewOneReservation = async (req, res) => {
+  const reservationId = req.params.id;
+
+  try {
+    const reservation = await Reservation.findById(reservationId);
+    if (!reservation) {
+      return res.status(404).json({ status: "user not found" });
+    }
+
+    res.status(200).json(reservation);
+  } catch (err) {
+    console.error(err.message);
+    res
+      .status(500)
+      .json({ status: "Error with getting reservation", error: err.message });
+  }
+};
 // view details of perticular user
 exports.previewReservation = async (req, res) => {
   const reservationId = req.params.id;
@@ -125,4 +155,21 @@ exports.deleterReservation = async (req, res) => {
     res.status(500).send({ status: "Error with delete reservation", error: err.message });
   }
 };
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 

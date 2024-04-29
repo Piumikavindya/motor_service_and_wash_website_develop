@@ -34,6 +34,11 @@ const reservationSchema = new Schema({
         type: String,
         required: true,
     },
+    Status: {
+        type: String,
+        enum: ["Pending", "Approved", "Rejected"],
+        default: "Pending",
+      },
     createdAt: {
         type: Date,
         default: Date.now

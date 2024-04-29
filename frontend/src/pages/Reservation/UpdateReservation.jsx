@@ -15,7 +15,8 @@ const UpdateReservations = () => {
   const [Comments, setComments] = useState("");
   const [loading, setLoading] = useState(false);
   const { id } = useParams();
-  const { enqueueSnackbar } = useSnackbar();
+  const [showAlert, setShowAlert] = useState(false); // New state for showing alert
+ const { enqueueSnackbar } = useSnackbar();
   const navigate = useNavigate();
   const { accountId } = useParams();
 
@@ -65,6 +66,8 @@ const UpdateReservations = () => {
           variant: "success",
         });
         setLoading(false);
+        setShowAlert(true); // Show alert on successful creation
+
         setServiceStation("");
         setVehicleNumber("");
         setVehicleType("");
@@ -98,6 +101,11 @@ const UpdateReservations = () => {
                 with a confirmation call, ensuring your booking is swiftly
                 confirmed. Experience seamless scheduling without the fuss.{" "}
               </p>
+              {showAlert && (
+                <div className="bg-green-200 text-green-700 p-4 mb-4 rounded">
+                  Reservation updated successfully!
+                </div>
+              )}
               <form onSubmit={handleUpdateReservations}>
                 <div className="mb-4">
                   <select

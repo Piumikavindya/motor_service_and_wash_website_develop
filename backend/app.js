@@ -9,6 +9,9 @@ require('dotenv').config();
 require('./database/database');
 const reservationRouter = require("./routes/reservation");
 const userRouter = require("./routes/user");
+const approvalRouter = require("./routes/approvalReservation");
+const contactRouter = require("./routes/contactform");
+
 
 const PORT = process.env.PORT || 5555;
 
@@ -39,6 +42,8 @@ app.get("/about",(req,res) =>{
 
 app.use('/reservation', reservationRouter);
 app.use('/user', userRouter);
+app.use('/approval', approvalRouter);
+app.use('/contact', contactRouter);
 
 app.listen(PORT, () => {
     console.log(`The server is listening on port: ${PORT}`);

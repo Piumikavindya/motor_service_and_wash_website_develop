@@ -1,15 +1,9 @@
-import React, { useState } from "react";
-import { useLogout } from "../hooks/useLogout";
+import React from "react";
+import { useLogout } from "../../hooks/useLogout";
 import { Link, useNavigate, useParams } from "react-router-dom";
-import { useAuthContext } from "../hooks/useAuthContext";
-import { Fragment } from "react";
-import { Disclosure, Menu, Transition } from "@headlessui/react";
-import { BellIcon, XMarkIcon, UserCircleIcon } from '@heroicons/react/24/outline'
+import { useAuthContext } from "../../hooks/useAuthContext";
 
-function classNames(...classes) {
-  return classes.filter(Boolean).join(" ");
-}
-export default function Nav() {
+export default function AdminNavBarCom() {
   const { user } = useAuthContext();
   const { logout } = useLogout();
   const { accountId } = useParams();
@@ -21,7 +15,6 @@ export default function Nav() {
 
   return (
     <div>
-      {/* Navbar Start */}
       <div
         className="navigation fixed top-0 left-0 w-full z-30 duration-300 bg-white"
         style={{ height: "80px" }}
@@ -30,7 +23,7 @@ export default function Nav() {
           <nav className="navbar py-2 navbar-expand-lg flex justify-between items-center relative duration-300">
             <a className="navbar-brand" href="index.html">
               <img
-                src="../../assets/img/new.png"
+                src="../assets/img/new.png"
                 alt="Logo"
                 width="100"
                 height="50"
@@ -58,7 +51,7 @@ export default function Nav() {
                 <li className="nav-item">
                   <a
                     className="page-scroll active text-white font-bold"
-                    href={`/home/${accountId}`}
+                    href="/adminhome"
                   >
                     Home
                   </a>
@@ -66,82 +59,29 @@ export default function Nav() {
                 <li className="nav-item">
                   <a
                     className="page-scroll text-white font-bold"
-                    href={`/service/${accountId}`}
+                    href="/user/preview-users"
                   >
-                    Services
+                    Manage User
                   </a>
                 </li>
                 <li className="nav-item">
                   <a
                     className="page-scroll text-white font-bold"
-                    href={`/about/${accountId}`}
+                    href="/reservation/view-reservations"
                   >
-                    About
+                    Manage Reservation
                   </a>
                 </li>
                 <li className="nav-item">
                   <a
                     className="page-scroll text-white font-bold"
-                    href={`/about/${accountId}`}
+                    href="/ContactForms"
                   >
-                    Network
-                  </a>
-                </li>
-
-                <li className="nav-item">
-                  <a
-                    className="page-scroll text-white font-bold"
-                    href={`/offers/${accountId}`}
-                  >
-                    Offers
-                  </a>
-                </li>
-                <li className="nav-item">
-                  <a
-                    className="page-scroll text-white font-bold"
-                    href={`/contact/${accountId}`}
-                  >
-                    Contact
+                    Contact Forms
                   </a>
                 </li>
               </ul>
             </div>
-
-            <Menu as="div" className="relative ml-3">
-              <div>
-                <Menu.Button className="relative flex items-center justify-center rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
-                  <span className="sr-only">Open user menu</span>
-                  <UserCircleIcon className="h-10 w-15 rounded-full text-blue-500" />
-
-                </Menu.Button>
-              </div>
-              <Transition
-                as={Fragment}
-                enter="transition ease-out duration-100"
-                enterFrom="transform opacity-0 scale-95"
-                enterTo="transform opacity-100 scale-100"
-                leave="transition ease-in duration-75"
-                leaveFrom="transform opacity-100 scale-100"
-                leaveTo="transform opacity-0 scale-95"
-              >
-                <Menu.Items className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
-                  <Menu.Item>
-                    {({ active }) => (
-                      <a
-                        href={`/userprofile/${accountId}`}
-                        className={classNames(
-                          active ? "bg-gray-100" : "",
-                          "block px-4 py-2 text-sm text-gray-700"
-                        )}
-                      >
-                        Account Setting
-                      </a>
-                    )}
-                  </Menu.Item>
-                </Menu.Items>
-              </Transition>
-            </Menu>
-
             {user && (
               <div>
                 <span className="ml-3">{user.accountId}</span>
@@ -163,7 +103,6 @@ export default function Nav() {
           </nav>
         </div>
       </div>
-      {/* Navbar End */}
     </div>
   );
 }

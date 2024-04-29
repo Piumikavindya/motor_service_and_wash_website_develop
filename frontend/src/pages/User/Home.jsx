@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import { useLogout } from "../hooks/useLogout";
+import { useLogout } from "../../hooks/useLogout";
 import { Link } from "react-router-dom";
-import { useAuthContext } from "../hooks/useAuthContext";
-import "../styles/animation.css";
+import { useAuthContext } from "../../hooks/useAuthContext";
+import "../../styles/animation.css";
 export default function Home() {
   const [message, setMessage] = useState("");
   const [accountId, setAccountId] = useState("");
@@ -163,7 +163,7 @@ export default function Home() {
       {/* Hero Area End */}
 
       {/* Clients Section Start */}
-      <div id="clients">
+      <div id="clients" className="bg-blue-100">
         <div class="container mx-auto px-4">
           <div class="text-center">
             <h2

@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { useLogin } from "../hooks/useLogin";
-import { useLogout } from "../hooks/useLogout";
-import { useAuthContext } from "../hooks/useAuthContext";
+import { useLogin } from "../../hooks/useLogin";
+import { useLogout } from "../../hooks/useLogout";
+import { useAuthContext } from "../../hooks/useAuthContext";
 
 const LoginPage = () => {
   const [email, setEmail] = useState("");
@@ -19,8 +19,8 @@ const LoginPage = () => {
       // Call login function and pass email, password, and accountId
       await login(email, password, accountId);
       
-      // Navigate to home page with the accountId
-      navigate(`/home/${accountId}`);
+   
+      
     } catch (error) {
       console.error("Login error:", error);
     }
@@ -30,12 +30,13 @@ const LoginPage = () => {
     navigate('/'); 
   };
   
+  
   return (
     <div class="bg-blue-100 text-black flex min-h-screen flex-col items-center pt-16 sm:justify-center sm:pt-0">
       <a href="#">
       <div
           className="navigation fixed top-0 left-0 w-full z-30 duration-300 bg-white"
-          style={{ height: "80px" }}
+          style={{ height: "90px" }}
         >
           <div className="container">
             <nav className="navbar py-2 navbar-expand-lg flex justify-between items-center relative duration-300">
@@ -161,7 +162,7 @@ const LoginPage = () => {
                       type="accountId"
                       value={accountId}
                       onChange={(e) => setAccountId(e.target.value)}
-                      placeholder="Enter Account Number"
+                      placeholder="Enter Account Number - ACCXXX"
                       class="block w-full border-0 bg-transparent p-0 text-sm file:my-1 placeholder:text-muted-foreground/90 focus:outline-none focus:ring-0 focus:ring-teal-500 sm:leading-7 text-foreground"
                       required
                     />
@@ -188,7 +189,7 @@ const LoginPage = () => {
               </div>
               <div class="mt-4 flex items-center justify-between">
                
-                <Link to="/forgot-password" class="text-sm font-medium text-foreground underline">Forgot password?</Link>
+                <Link to="/forgetpassword" class="text-sm font-medium text-foreground underline">Forgot password?</Link>
               </div>
               <div class="mt-4 flex items-center justify-end gap-x-2">
                 <Link to="/signup" class="inline-flex items-center justify-center rounded-md text-sm font-medium transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:bg-accent hover:ring hover:ring-white h-10 px-4 py-2 duration-200">Register</Link>
