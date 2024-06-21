@@ -1,10 +1,4 @@
-const mongoose = require('mongoose');
+export const PORT =5555;
 
-mongoose.connect('mongodb://127.0.0.1:27017/motor_services_and_wash_app') 
-  .then(() => {
-    console.log('DB is connected!');
-  })
-  .catch((ex) => {
-    console.log('DB connection failed: ', ex);
-  });
-
+export const mongoDBURL =
+'mongodb+srv://root:Eg20204034@cluster0.x4e8dcy.mongodb.net/user-collection?retryWrites=true&w=majority'

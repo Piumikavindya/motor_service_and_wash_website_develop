@@ -3,48 +3,43 @@ const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const dotenv = require('dotenv');
-const app = express();
-require('express-async-errors');
-require('dotenv').config();
-require('./database/database');
-const reservationRouter = require("./routes/reservation");
-const userRouter = require("./routes/user");
-const approvalRouter = require("./routes/approvalReservation");
-const contactRouter = require("./routes/contactform");
+dotenv.config(); // Load environment variables
 
+const app = express();
 
 const PORT = process.env.PORT || 5555;
-
-
-
+const mongoDBURL = process.env.MONGODB_URL;
 
 app.use(express.json());
 app.use(cors());
 app.use(bodyParser.json());
 
+// Import routes
+const reservationRouter = require('./routes/reservation');
+const userRouter = require('./routes/user');
+const approvalRouter = require('./routes/approvalReservation');
+const contactRouter = require('./routes/contactform');
 
-//app.use(express.json());
-// const URL = process.env.MONGODB_URL;
-
-// mongoose.connect(URL, {
-//   useNewUrlParser: true,
-//   useUnifiedTopology: true,
-// });
-
-
-//const connection = mongoose.connection;
-
-
-app.get("/about",(req,res) =>{
-    res.send("<h1> Hello illllllllj</h1>");
+// Sample route
+app.get('/about', (req, res) => {
+  res.send('<h1>Hello</h1>');
 });
 
-
+// Use routes
 app.use('/reservation', reservationRouter);
 app.use('/user', userRouter);
 app.use('/approval', approvalRouter);
 app.use('/contact', contactRouter);
 
-app.listen(PORT, () => {
-    console.log(`The server is listening on port: ${PORT}`);
+// Connect to MongoDB and start the server
+mongoose
+  .connect(mongoDBURL)
+  .then(() => {
+    console.log('App connected to the database');
+    app.listen(PORT, () => {
+      console.log(`App is listening to port: ${PORT}`);
+    });
+  })
+  .catch((error) => {
+    console.log(error);
   });
