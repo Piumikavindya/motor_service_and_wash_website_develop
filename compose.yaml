@@ -4,27 +4,23 @@ services:
   web:
     depends_on: 
       - api
-    build: ./frontend
+    image: piumikavindya/motor-service-and-wash-web-frontend:${BUILD_NUMBER}
     ports:
       - "3000:3000"
     environment:
       VITE_API_URL: http://localhost:5555
-    volumes:
-      - ./frontend:/app
 
   api:
     depends_on: 
       - db
-    build: ./backend
+    image: piumikavindya/motor-service-and-wash-web-backend:${BUILD_NUMBER}
     ports: 
       - "5555:5555"
     environment: 
       DB_URL: mongodb://db:27017/MotorServiceAndWashCentreApp
-    volumes:
-      - ./backend:/app
 
   db:
-    image: mongo:latest
+    image: piumikavindya/motor-service-and-wash-web-database:${BUILD_NUMBER}
     ports:
       - "27017:27017"
     volumes:
