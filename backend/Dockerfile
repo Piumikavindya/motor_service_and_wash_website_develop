@@ -1,5 +1,5 @@
 # Use an official Node.js image
-FROM node:latest
+FROM node:20.5.1
 
 # Set the working directory
 WORKDIR /app
@@ -14,7 +14,7 @@ RUN npm install
 COPY . .
 
 # Add environment variables
-ENV PORT=5000
+ENV PORT=5555
 ENV MongoDB_URI=mongodb://mongo:27017/mean-docker
 ENV USER=user@gmail.com
 ENV PASSWORD=123
@@ -24,7 +24,7 @@ ENV SECRET=secret
 ENV RESET_SECRET=reset
 
 # Expose the application port
-EXPOSE 5000
+EXPOSE 5555
 
 # Start the application
 CMD ["npm", "start"]
