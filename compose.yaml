@@ -14,7 +14,7 @@ services:
 
   api:
     depends_on: 
-      - database
+      - db
     build: ./backend
     ports: 
       - "5555:5555"
@@ -23,7 +23,7 @@ services:
     volumes:
       - ./backend:/app
 
-  database:
+  db:
     image: mongo:latest
     ports:
       - "27017:27017"
