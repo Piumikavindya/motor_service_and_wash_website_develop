@@ -1,7 +1,4 @@
-# Dockerfile for the API service
 FROM node:20-alpine
-
-RUN npm install -g nodemon
 
 WORKDIR /app
 
@@ -11,4 +8,4 @@ RUN npm install
 
 EXPOSE 5555
 
-CMD ["npm","run" ,"start"]
+CMD ["npm", "start"]
