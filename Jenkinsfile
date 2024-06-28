@@ -1,16 +1,28 @@
 pipeline {
     agent any
     
-    environment {
-        REPO_URL = 'https://github.com/Piumikavindya/motor_service_and_wash_website_develop'
-        DOCKERHUB_CREDENTIALS = credentials('dockerPassword')
-        DOCKER_IMAGE_NAME = 'piumikavindya/MotorService'
-    }
     
     stages {
-        stage('Checkout') {
+      stage('SCM Checkout') {
             steps {
-                git url: "${REPO_URL}", branch: 'main'
+                retry(3) {
+                    git branch: 'main', url: 'https://github.com/Piumikavindya/motor_service_and_wash_website_develop.git'
+                }
+                bat 'dir' // Verify the workspace files after checkout
+            }
+        }
+         stage('Build Backend Docker Image') {
+            steps {
+                dir('backend') {
+                    bat 'docker build -t piumikavindya/motor-service-and-wash-web-backend-image:%BUILD_NUMBER% .'
+                }
+            }
+        }
+          stage('Build Frontend Docker Image') {
+            steps {
+                dir('frontend') {
+                    bat 'docker build -t piumikavindya/motor-service-and-wash-web-frontend-image:%BUILD_NUMBER% .'
+                }
             }
         }
         
@@ -18,35 +30,30 @@ pipeline {
             steps {
                 withCredentials([string(credentialsId: 'dockerPassword', variable: 'dockerPassword')]) {
                     script {
-                        bat "docker login -u piumikavindya -p ${dockerPassword}"
+                           bat "docker login -u piumikavindya -p %dockerPassword%"
                     }
                 }
             }
         }
-        
-        stage('Build and Push Docker Images') {
+        stage('Push Backend Image') {
             steps {
-                // Build backend Docker image
-                dir('backend') {
-                    bat "docker build -t ${DOCKER_IMAGE_NAME}-backend:%BUILD_NUMBER% ."
-                    bat "docker push ${DOCKER_IMAGE_NAME}-backend:%BUILD_NUMBER%"
-                }
-                
-                // Build frontend Docker image
-                dir('frontend') {
-                    bat "docker build -t ${DOCKER_IMAGE_NAME}-frontend:%BUILD_NUMBER% ."
-                    bat "docker push ${DOCKER_IMAGE_NAME}-frontend:%BUILD_NUMBER%"
-                }
+                bat 'docker push piumikavindya/motor-service-and-wash-web-backend-image:%BUILD_NUMBER%'
             }
         }
+        stage('Push Frontend Image') {
+            steps {
+                bat 'docker push piumikavindya/motor-service-and-wash-web-frontend-image:%BUILD_NUMBER%'
+            }
+        }
+      
         
         stage('Deploy') {
             steps {
                 // Clean up existing containers and networks
-                bat 'docker-compose down'
+                bat 'docker compose down'
                 
                 // Deploy using docker-compose
-                bat 'docker-compose up -d'
+                bat 'docker compose up -d'
             }
         }
     }
