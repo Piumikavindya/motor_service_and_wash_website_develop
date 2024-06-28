@@ -1,6 +1,6 @@
 
 # set the base image to create the image for react app
-FROM node:20-alpine
+FROM node:20.5.1
 # create a user with permissions to run the app
 # -S -> create a system user
 # -G -> add the user to a group
@@ -35,4 +35,4 @@ COPY . .
 # expose port 5173 to tell Docker that the container listens on the specified network ports at runtime
 EXPOSE 3000
 # command to run the app
-CMD npm start
+CMD ["npm","run" ,"start"]
