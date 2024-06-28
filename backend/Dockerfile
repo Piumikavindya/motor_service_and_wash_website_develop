@@ -1,19 +1,14 @@
-# Use an official Node.js image
-FROM node:20-alpine
+# Dockerfile for the API service
+FROM node:20.14.0
 
 RUN npm install -g nodemon
-# Set the working directory
+
 WORKDIR /app
-# Copy package.json and package-lock.json
-COPY package*.json ./
-# Install dependencies
+
+COPY . .
 
 RUN npm install
 
+EXPOSE 5000
 
-# Copy the rest of the application code
-COPY . .
-# Expose the application port
-EXPOSE 5555
-# Start the application
-CMD ["npm", "run", "dev"]
+CMD ["npm","run" ,"start"]
