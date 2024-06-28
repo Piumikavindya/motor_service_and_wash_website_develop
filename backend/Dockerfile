@@ -1,5 +1,5 @@
 # Dockerfile for the API service
-FROM node:20.14.0
+FROM node:20-alpine
 
 RUN npm install -g nodemon
 

@@ -1,5 +1,5 @@
 # Dockerfile for the client
-FROM node:20.14.0
+FROM node:20.5.1
 
 WORKDIR /app
 
