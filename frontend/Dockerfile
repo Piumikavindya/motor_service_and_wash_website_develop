@@ -1,6 +1,6 @@
 
 # set the base image to create the image for react app
-FROM node:20-buster-slim
+FROM node:20-alpine
 # create a user with permissions to run the app
 # -S -> create a system user
 # -G -> add the user to a group
