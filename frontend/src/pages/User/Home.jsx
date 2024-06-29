@@ -156,7 +156,8 @@ export default function Home() {
               experience excellence like never before.
             </p>
             <button class="mt-8 text-white uppercase py-4 text-base font-light px-10 border border-white hover:bg-white hover:bg-opacity-10">
-            <a href="signup">Get Started</a>            </button>
+              <a href="signup">Let's started</a>{" "}
+            </button>
           </div>
         </div>
       </div>
@@ -226,16 +227,16 @@ export default function Home() {
             >
               <div className="mx-3 mb-8">
                 <div className="footer-logo mb-3">
-                <img
-                  src="assets/img/new.png"
-                  alt="Logo"
-                  width="100"
-                  height="50"
-                />
+                  <img
+                    src="assets/img/new.png"
+                    alt="Logo"
+                    width="100"
+                    height="50"
+                  />
                 </div>
                 <p className="text-gray-300">
-                Trust us to make your
-              vehicle shine inside and out, with precision and care.
+                  Trust us to make your vehicle shine inside and out, with
+                  precision and care.
                 </p>
               </div>
             </div>
