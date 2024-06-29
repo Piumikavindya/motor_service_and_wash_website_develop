@@ -1,5 +1,5 @@
 # Use an official Node.js image
-FROM node:20-alpine
+FROM node:20.5.1
 
 RUN npm install -g nodemon
 
